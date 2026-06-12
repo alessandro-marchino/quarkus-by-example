@@ -1,8 +1,8 @@
-package de.schulte;
+package de.schulte.smartbar.backoffice.api;
 
 import io.quarkus.test.junit.QuarkusIntegrationTest;
 
 @QuarkusIntegrationTest
-class SmartbarBackofficeIT extends SmartbarBackofficeTest {
+class CategoriesResourceIT extends CategoriesResourceTest {
     // Execute the same tests but in packaged mode.
 }
