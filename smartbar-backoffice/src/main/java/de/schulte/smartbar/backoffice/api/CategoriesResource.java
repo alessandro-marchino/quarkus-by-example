@@ -4,10 +4,19 @@ import java.net.URI;
 import java.util.List;
 
 import de.schulte.smartbar.backoffice.api.model.Category;
+import de.schulte.smartbar.backoffice.service.CategoriesService;
+import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.core.Response;
 
 public class CategoriesResource implements CategoriesApi {
+
+    private final CategoriesService categoriesService;
+
+    @Inject
+    public CategoriesResource(CategoriesService categoriesService) {
+        this.categoriesService = categoriesService;
+    }
 
     @Override
     public Response categoriesCategoryIdDelete(String categoryId) {
@@ -16,7 +25,7 @@ public class CategoriesResource implements CategoriesApi {
 
     @Override
     public Response categoriesCategoryIdGet(String categoryId) {
-        return Response.ok(new Category().name("drinks")).build();
+        return Response.ok(categoriesService.get()).build();
     }
 
     @Override
@@ -26,7 +35,7 @@ public class CategoriesResource implements CategoriesApi {
 
     @Override
     public Response categoriesGet() {
-        return Response.ok(List.of(new Category().name("drinks"))).build();
+        return Response.ok(List.of(categoriesService.get())).build();
     }
 
     @Override
