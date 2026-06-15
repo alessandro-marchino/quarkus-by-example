@@ -1,12 +1,29 @@
 package de.schulte.smartbar.backoffice.service;
 
-import de.schulte.smartbar.backoffice.api.model.Table;
+import de.schulte.smartbar.backoffice.entity.Table;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
 
 @ApplicationScoped
-public class TablesService {
+public class TablesService extends CrudService<Table> {
+
+    public TablesService() {
+        // Just for CDI requirements
+        super(null);
+    }
+
+    /**
+     * @param entityManager
+     */
+    @Inject
+    public TablesService(EntityManager entityManager) {
+        super(entityManager);
+    }
 
     public Table get() {
-        return new Table().name("Chile");
+        Table table = new Table();
+        table.setName("Chile");
+        return table;
     }
 }

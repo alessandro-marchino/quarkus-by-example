@@ -3,7 +3,8 @@ package de.schulte.smartbar.backoffice.api;
 import java.net.URI;
 import java.util.List;
 
-import de.schulte.smartbar.backoffice.api.model.Table;
+import de.schulte.smartbar.backoffice.api.model.ApiTable;
+import de.schulte.smartbar.backoffice.entity.Table;
 import de.schulte.smartbar.backoffice.service.TablesService;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
@@ -24,8 +25,13 @@ public class TablesResource implements TablesApi {
     }
 
     @Override
-    public Response tablesPost(@Valid Table table) {
-        return Response.created(URI.create("todo")).build();
+    public Response tablesPost(@Valid ApiTable apiTable) {
+        final Table table = new Table();
+        table.setName(apiTable.getName());
+        table.setSeatCount(apiTable.getSeatCount());
+        table.setActive(apiTable.getActive());
+        final Table persistedTable = tablesService.persist(table);
+        return Response.created(URI.create("/tables/" + persistedTable.getId())).build();
     }
 
     @Override
@@ -39,7 +45,7 @@ public class TablesResource implements TablesApi {
     }
 
     @Override
-    public Response tablesTableIdPut(String tableId, @Valid Table table) {
+    public Response tablesTableIdPut(String tableId, @Valid ApiTable table) {
         return Response.ok().build();
     }
 
