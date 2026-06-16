@@ -13,17 +13,13 @@ public class TablesService extends CrudService<Table> {
         super(null);
     }
 
-    /**
-     * @param entityManager
-     */
     @Inject
     public TablesService(EntityManager entityManager) {
         super(entityManager);
     }
 
-    public Table get() {
-        Table table = new Table();
-        table.setName("Chile");
-        return table;
+    @Override
+    protected Class<Table> getEntityClass() {
+        return Table.class;
     }
 }

@@ -16,7 +16,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/category"
+                  $ref: "#/components/schemas/apiCategory"
     post:
       tags:
         - Categories
@@ -24,7 +24,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/category"
+              $ref: "#/components/schemas/apiCategory"
       responses:
         201:
           description: Success
@@ -33,7 +33,8 @@ paths:
     parameters:
       - name: categoryId
         schema:
-          type: string
+          type: integer
+          format: int64
         in: path
     put:
       tags:
@@ -42,7 +43,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/category"
+              $ref: "#/components/schemas/apiCategory"
       responses:
         200:
           description: Entity successfully updated
@@ -61,7 +62,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/category"
+                $ref: "#/components/schemas/apiCategory"
   /articles:
     get:
       tags:
@@ -74,15 +75,22 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/article"
+                  $ref: "#/components/schemas/apiArticle"
     post:
       tags:
         - Articles
+      parameters:
+        - name: x-category-id
+          in: header
+          required: true
+          schema:
+            type: integer
+            format: int64
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/article"
+              $ref: "#/components/schemas/apiArticle"
       responses:
         201:
           $ref: "#/components/responses/201"
@@ -90,7 +98,8 @@ paths:
     parameters:
       - name: articleId
         schema:
-          type: string
+          type: integer
+          format: int64
         in: path
     put:
       tags:
@@ -99,7 +108,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/article"
+              $ref: "#/components/schemas/apiArticle"
       responses:
         200:
           description: Entity successfully updated
@@ -118,7 +127,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/article"
+                $ref: "#/components/schemas/apiArticle"
   /tables:
     get:
       tags:
@@ -147,7 +156,8 @@ paths:
     parameters:
       - name: tableId
         schema:
-          type: string
+          type: integer
+          format: int64
         in: path
     put:
       tags:
@@ -178,16 +188,22 @@ paths:
                 $ref: "#/components/schemas/apiTable"
 components:
   schemas:
-    category:
+    apiCategory:
       type: object
       properties:
+        id:
+          type: integer
+          format: int64
         name:
           type: string
         description:
           type: string
-    article:
+    apiArticle:
       type: object
       properties:
+        id:
+          type: integer
+          format: int64
         name:
           type: string
         price:
@@ -199,6 +215,9 @@ components:
     apiTable:
       type: object
       properties:
+        id:
+          type: integer
+          format: int64
         name:
           type: string
         seatCount:

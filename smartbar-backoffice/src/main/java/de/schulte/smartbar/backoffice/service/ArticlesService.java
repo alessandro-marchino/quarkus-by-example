@@ -1,12 +1,25 @@
 package de.schulte.smartbar.backoffice.service;
 
-import de.schulte.smartbar.backoffice.api.model.Article;
+import de.schulte.smartbar.backoffice.entity.Article;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
 
 @ApplicationScoped
-public class ArticlesService {
+public class ArticlesService extends CrudService<Article> {
 
-    public Article get() {
-        return new Article().name("Cola");
+    public ArticlesService() {
+        // Just for CDI requirements
+        super(null);
+    }
+
+    @Inject
+    public ArticlesService(EntityManager entityManager) {
+        super(entityManager);
+    }
+
+    @Override
+    protected Class<Article> getEntityClass() {
+        return Article.class;
     }
 }

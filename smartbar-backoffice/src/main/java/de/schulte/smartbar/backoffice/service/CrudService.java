@@ -1,7 +1,12 @@
 package de.schulte.smartbar.backoffice.service;
 
+import java.util.List;
+import java.util.Optional;
+
 import de.schulte.smartbar.backoffice.entity.BaseEntity;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
 
 @Transactional
@@ -16,5 +21,25 @@ public abstract class CrudService<E extends BaseEntity> {
         entityManager.persist(entity);
         return entity;
     }
+    public E update(E entity) {
+        System.out.println(entity.getId());
+        return entityManager.merge(entity);
+    }
+    public Optional<E> getById(Long id) {
+        return Optional.ofNullable(entityManager.find(getEntityClass(), id));
+    }
+    public List<E> listAll() {
+        final CriteriaQuery<E> query = entityManager.getCriteriaBuilder().createQuery(getEntityClass());
+        final Root<E> root = query.from(getEntityClass());
+        query.select(root);
+        return entityManager.createQuery(query).getResultList();
+    }
+    public Optional<E> deleteById(Long id) {
+        final Optional<E> entity = getById(id);
+        entity.ifPresent(e -> entityManager.remove(e));
+        return entity;
+    }
+
+    protected abstract Class<E> getEntityClass();
 
 }
