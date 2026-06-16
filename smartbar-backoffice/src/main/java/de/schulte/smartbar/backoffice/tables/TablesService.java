@@ -1,6 +1,6 @@
-package de.schulte.smartbar.backoffice.service;
+package de.schulte.smartbar.backoffice.tables;
 
-import de.schulte.smartbar.backoffice.entity.Table;
+import de.schulte.smartbar.backoffice.CrudService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;

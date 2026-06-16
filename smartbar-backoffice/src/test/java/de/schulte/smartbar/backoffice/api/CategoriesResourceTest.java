@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import de.schulte.smartbar.backoffice.entity.Category;
-import de.schulte.smartbar.backoffice.service.CategoriesService;
+import de.schulte.smartbar.backoffice.categories.CategoriesService;
+import de.schulte.smartbar.backoffice.categories.Category;
 
 import static io.restassured.RestAssured.given;
 

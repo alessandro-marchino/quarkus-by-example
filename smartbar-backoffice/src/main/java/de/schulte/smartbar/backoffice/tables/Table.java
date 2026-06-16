@@ -1,5 +1,6 @@
-package de.schulte.smartbar.backoffice.entity;
+package de.schulte.smartbar.backoffice.tables;
 
+import de.schulte.smartbar.backoffice.BaseEntity;
 import jakarta.persistence.Entity;
 
 @Entity

@@ -1,4 +1,4 @@
-package de.schulte.smartbar.backoffice.entity;
+package de.schulte.smartbar.backoffice;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;

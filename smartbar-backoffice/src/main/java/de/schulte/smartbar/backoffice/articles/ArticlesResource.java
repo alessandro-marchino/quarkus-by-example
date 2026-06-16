@@ -1,13 +1,12 @@
-package de.schulte.smartbar.backoffice.api;
+package de.schulte.smartbar.backoffice.articles;
 
 import java.net.URI;
 import java.util.Optional;
 
+import de.schulte.smartbar.backoffice.api.ArticlesApi;
 import de.schulte.smartbar.backoffice.api.model.ApiArticle;
-import de.schulte.smartbar.backoffice.entity.Article;
-import de.schulte.smartbar.backoffice.entity.Category;
-import de.schulte.smartbar.backoffice.service.ArticlesService;
-import de.schulte.smartbar.backoffice.service.CategoriesService;
+import de.schulte.smartbar.backoffice.categories.CategoriesService;
+import de.schulte.smartbar.backoffice.categories.Category;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;

@@ -1,7 +1,9 @@
-package de.schulte.smartbar.backoffice.entity;
+package de.schulte.smartbar.backoffice.articles;
 
 import java.math.BigDecimal;
 
+import de.schulte.smartbar.backoffice.BaseEntity;
+import de.schulte.smartbar.backoffice.categories.Category;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 

@@ -1,11 +1,10 @@
-package de.schulte.smartbar.backoffice.api;
+package de.schulte.smartbar.backoffice.tables;
 
 import java.net.URI;
 import java.util.Optional;
 
+import de.schulte.smartbar.backoffice.api.TablesApi;
 import de.schulte.smartbar.backoffice.api.model.ApiTable;
-import de.schulte.smartbar.backoffice.entity.Table;
-import de.schulte.smartbar.backoffice.service.TablesService;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.core.Response;
@@ -13,21 +12,23 @@ import jakarta.ws.rs.core.Response;
 public class TablesResource implements TablesApi {
 
     private final TablesService tablesService;
+    private final TableMapper tableMapper;
 
     @Inject
-    public TablesResource(TablesService tablesService) {
+    public TablesResource(TablesService tablesService, TableMapper tableMapper) {
         this.tablesService = tablesService;
+        this.tableMapper = tableMapper;
     }
 
     @Override
     public Response tablesGet() {
-        return Response.ok(tablesService.listAll().stream().map(this::mapTableToApiTable).toList()).build();
+        return Response.ok(tablesService.listAll().stream().map(tableMapper::mapToApiTable).toList()).build();
     }
 
     @Override
     public Response tablesPost(@Valid ApiTable apiTable) {
         final Table table = new Table();
-        mapApiTableToTable(apiTable, table);
+        tableMapper.mapToTable(apiTable, table);
         final Table persistedTable = tablesService.persist(table);
         return Response.created(URI.create("/tables/" + persistedTable.getId())).build();
     }
@@ -47,7 +48,7 @@ public class TablesResource implements TablesApi {
         if (table.isEmpty()) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        return Response.ok(mapTableToApiTable(table.get())).build();
+        return Response.ok(tableMapper.mapToApiTable(table.get())).build();
     }
 
     @Override
@@ -57,22 +58,9 @@ public class TablesResource implements TablesApi {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
         final Table table = existingTable.get();
-        mapApiTableToTable(apiTable, table);
+        tableMapper.mapToTable(apiTable, table);
         tablesService.update(table);
         return Response.ok().build();
-    }
-
-    private ApiTable mapTableToApiTable(Table table) {
-        return new ApiTable()
-            .id(table.getId())
-            .active(table.getActive())
-            .name(table.getName())
-            .seatCount(table.getSeatCount());
-    }
-    private void mapApiTableToTable(ApiTable apiTable, Table table) {
-        table.setActive(apiTable.getActive());
-        table.setName(apiTable.getName());
-        table.setSeatCount(apiTable.getSeatCount());
     }
 
 }

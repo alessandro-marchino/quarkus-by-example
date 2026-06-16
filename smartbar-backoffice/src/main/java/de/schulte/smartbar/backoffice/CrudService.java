@@ -1,9 +1,8 @@
-package de.schulte.smartbar.backoffice.service;
+package de.schulte.smartbar.backoffice;
 
 import java.util.List;
 import java.util.Optional;
 
-import de.schulte.smartbar.backoffice.entity.BaseEntity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
