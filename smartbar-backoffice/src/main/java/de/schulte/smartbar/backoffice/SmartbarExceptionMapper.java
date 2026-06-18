@@ -14,7 +14,7 @@ public class SmartbarExceptionMapper implements ExceptionMapper<Exception> {
         if(causedByConstraintViolation(exception)) {
             return Response.status(Response.Status.CONFLICT).build();
         }
-        return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        throw new RuntimeException(exception);
     }
 
     private static boolean causedByConstraintViolation(Exception exception) {

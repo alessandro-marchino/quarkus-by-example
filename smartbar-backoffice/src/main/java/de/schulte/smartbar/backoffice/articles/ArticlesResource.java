@@ -1,90 +1,75 @@
 package de.schulte.smartbar.backoffice.articles;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
 
 import de.schulte.smartbar.backoffice.api.ArticlesApi;
 import de.schulte.smartbar.backoffice.api.model.ApiArticle;
-import de.schulte.smartbar.backoffice.categories.CategoriesService;
 import de.schulte.smartbar.backoffice.categories.Category;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.core.Response;
 
+@Transactional
 public class ArticlesResource implements ArticlesApi {
 
-    private final ArticlesService articlesService;
-    private final CategoriesService categoriesService;
+    private final ArticleMapper mapper;
 
     @Inject
-    public ArticlesResource(ArticlesService articlesService, CategoriesService categoriesService) {
-        this.articlesService = articlesService;
-        this.categoriesService = categoriesService;
+    public ArticlesResource(ArticleMapper mapper) {
+        this.mapper = mapper;
     }
 
     @Override
     public Response articlesArticleIdDelete(Long articleId) {
-         final Optional<Article> article = articlesService.deleteById(articleId);
+         final Optional<Article> article = Article.findByIdOptional(articleId);
         if (article.isEmpty()) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
+        article.get().delete();
         return Response.ok().build();
     }
 
     @Override
     public Response articlesArticleIdGet(Long articleId) {
-        final Optional<Article> article = articlesService.getById(articleId);
+        final Optional<Article> article = Article.findByIdOptional(articleId);
         if (article.isEmpty()) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        return Response.ok(mapArticleToApiArticle(article.get())).build();
+        return Response.ok(mapper.mapToApiArticle(article.get())).build();
     }
 
     @Override
     public Response articlesArticleIdPut(Long articleId, @Valid ApiArticle apiArticle) {
-        final Optional<Article> existingArticle = articlesService.getById(articleId);
+        final Optional<Article> existingArticle = Article.findByIdOptional(articleId);
         if (existingArticle.isEmpty()) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
         final Article article = existingArticle.get();
-        mapApiArticleToArticle(apiArticle, article);
-        articlesService.update(article);
+        mapper.mapToArticle(apiArticle, article);
         return Response.ok().build();
     }
 
     @Override
     public Response articlesGet() {
-        return Response.ok(articlesService.listAll().stream().map(this::mapArticleToApiArticle).toList()).build();
+        final List<Article> list = Article.listAll();
+        return Response.ok(list.stream().map(mapper::mapToApiArticle).toList()).build();
     }
 
     @Override
     public Response articlesPost(@NotNull Long xCategoryId, @Valid ApiArticle apiArticle) {
-        final Optional<Category> category = categoriesService.getById(xCategoryId);
+        final Optional<Category> category = Category.findByIdOptional(xCategoryId);
         if(category.isEmpty()) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
         final Article article = new Article();
-        mapApiArticleToArticle(apiArticle, article);
-        article.setCategory(category.get());
-        final Article persitedArticle = articlesService.persist(article);
-        return Response.created(URI.create("/articles/" + persitedArticle.getId())).build();
+        mapper.mapToArticle(apiArticle, article);
+        article. category = category.get();
+        article.persist();
+        return Response.created(URI.create("/articles/" + article.id)).build();
     }
 
-    private void mapApiArticleToArticle(ApiArticle apiArticle, Article article) {
-        article.setName(apiArticle.getName());
-        article.setDescription(apiArticle.getDescription());
-        article.setPrice(apiArticle.getPrice());
-        article.setPictureBase64(apiArticle.getPicture());
-    }
-
-    private ApiArticle mapArticleToApiArticle(Article article) {
-        final ApiArticle apiArticle = new ApiArticle();
-        apiArticle.setDescription(article.getDescription());
-        apiArticle.setName(article.getName());
-        apiArticle.setPicture(article.getPictureBase64());
-        apiArticle.setPrice(article.getPrice());
-        apiArticle.setId(article.getId());
-        return apiArticle;
-    }
 }

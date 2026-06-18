@@ -11,6 +11,7 @@ import de.schulte.smartbar.backoffice.api.model.ApiArticle;
 public interface ArticleMapper {
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "pictureBase64", source = "picture")
     Article mapToArticle(ApiArticle apiArticle, @MappingTarget Article article);
 
     ApiArticle mapToApiArticle(Article article);
