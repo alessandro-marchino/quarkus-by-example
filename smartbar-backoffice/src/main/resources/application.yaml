@@ -2,7 +2,10 @@ quarkus:
   datasource:
     username: bob
     password: bob
-    jdbc.url: jdbc:postgresql://localhost:5432/smartbarbo
-  hibernate-orm.schema-management.strategy: drop-and-create
+    jdbc:
+      url: jdbc:postgresql://localhost:5432/smartbarbo
+  hibernate-orm:
+    schema-management:
+      strategy: drop-and-create
 
 smartbar.backoffice.foo: baz
