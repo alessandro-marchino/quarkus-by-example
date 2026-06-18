@@ -45,3 +45,5 @@ nb-configuration.xml
 .certs/
 
 application-*.properties
+application-*.yaml
+application-*.yml
