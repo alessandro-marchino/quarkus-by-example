@@ -14,16 +14,18 @@ import jakarta.ws.rs.core.Response;
 @Transactional
 public class TablesResource implements TablesApi {
 
+    private final TablesRepository tablesRepository;
     private final TableMapper tableMapper;
 
     @Inject
-    public TablesResource(TableMapper tableMapper) {
+    public TablesResource(TablesRepository tablesRepository, TableMapper tableMapper) {
+        this.tablesRepository = tablesRepository;
         this.tableMapper = tableMapper;
     }
 
     @Override
     public Response tablesGet() {
-        final List<Table> tables = Table.listAll();
+        final List<Table> tables = tablesRepository.listAll();
         return Response.ok(tables.stream().map(tableMapper::mapToApiTable).toList()).build();
     }
 
@@ -31,23 +33,23 @@ public class TablesResource implements TablesApi {
     public Response tablesPost(@Valid ApiTable apiTable) {
         final Table table = new Table();
         tableMapper.mapToTable(apiTable, table);
-        table.persist();
-        return Response.created(URI.create("/tables/" + table.id)).build();
+        tablesRepository.persist(table);
+        return Response.created(URI.create("/tables/" + table.getId())).build();
     }
 
     @Override
     public Response tablesTableIdDelete(Long tableId) {
-        final Optional<Table> table = Table.findByIdOptional(tableId);
+        final Optional<Table> table = tablesRepository.findByIdOptional(tableId);
         if (table.isEmpty()) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        table.get().delete();
+        tablesRepository.delete(table.get());
         return Response.ok().build();
     }
 
     @Override
     public Response tablesTableIdGet(Long tableId) {
-        final Optional<Table> table = Table.findByIdOptional(tableId);
+        final Optional<Table> table = tablesRepository.findByIdOptional(tableId);
         if (table.isEmpty()) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
@@ -56,7 +58,7 @@ public class TablesResource implements TablesApi {
 
     @Override
     public Response tablesTableIdPut(Long tableId, @Valid ApiTable apiTable) {
-        final Optional<Table> existingTable = Table.findByIdOptional(tableId);
+        final Optional<Table> existingTable = tablesRepository.findByIdOptional(tableId);
         if (existingTable.isEmpty()) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }

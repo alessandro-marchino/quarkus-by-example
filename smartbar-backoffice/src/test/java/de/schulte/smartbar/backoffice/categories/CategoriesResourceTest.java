@@ -1,4 +1,4 @@
-package de.schulte.smartbar.backoffice.api;
+package de.schulte.smartbar.backoffice.categories;
 
 import io.quarkus.panache.mock.PanacheMock;
 import io.quarkus.test.junit.QuarkusTest;
@@ -9,8 +9,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-
-import de.schulte.smartbar.backoffice.categories.Category;
 
 import static io.restassured.RestAssured.given;
 
