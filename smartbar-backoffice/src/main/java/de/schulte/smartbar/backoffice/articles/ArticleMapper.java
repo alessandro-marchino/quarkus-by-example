@@ -12,7 +12,9 @@ public interface ArticleMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "pictureBase64", source = "picture")
+    @Mapping(target = "category", ignore = true)
     Article mapToArticle(ApiArticle apiArticle, @MappingTarget Article article);
 
+    @Mapping(target = "picture", source = "pictureBase64")
     ApiArticle mapToApiArticle(Article article);
 }

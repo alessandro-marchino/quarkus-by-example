@@ -5,5 +5,5 @@ import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 public class TablesRepository implements PanacheRepository<Table> {
-    // Nothing to add
+    // Nothing to att
 }

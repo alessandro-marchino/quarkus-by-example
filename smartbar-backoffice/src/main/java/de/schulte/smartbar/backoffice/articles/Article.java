@@ -2,8 +2,8 @@ package de.schulte.smartbar.backoffice.articles;
 
 import java.math.BigDecimal;
 
+import de.schulte.smartbar.backoffice.BaseEntity;
 import de.schulte.smartbar.backoffice.categories.Category;
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -16,22 +16,92 @@ import jakarta.validation.constraints.Positive;
 @jakarta.persistence.Table(name = "sbo_article", uniqueConstraints = {
     @UniqueConstraint(columnNames = { "name", "category_id" })
 })
-@NamedQuery(name = "Article.byCategory", query = "FROM Article WHERE category.id = :id ORDER BY price DESC")
+@NamedQuery(name = "Article.byCategory", query = "FROM Article WHERE category = ?1 ORDER BY price DESC")
 @NamedQuery(name = "Article.nameContaining", query = "FROM Article WHERE name LIKE CONCAT('%', CONCAT(?1, '%'))")
-public class Article extends PanacheEntity {
+public class Article extends BaseEntity {
 
     @NotNull
-    public String name;
+    private String name;
     @NotNull
     @Positive
-    public BigDecimal price;
+    private BigDecimal price;
     @NotNull
-    public String description;
+    private String description;
     @NotNull
-    public String pictureBase64;
+    private String pictureBase64;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    public Category category;
+    private Category category;
+
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * @param name the name to set
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * @return the price
+     */
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    /**
+     * @param price the price to set
+     */
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    /**
+     * @return the description
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * @param description the description to set
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    /**
+     * @return the pictureBase64
+     */
+    public String getPictureBase64() {
+        return pictureBase64;
+    }
+
+    /**
+     * @param pictureBase64 the pictureBase64 to set
+     */
+    public void setPictureBase64(String pictureBase64) {
+        this.pictureBase64 = pictureBase64;
+    }
+
+    /**
+     * @return the category
+     */
+    public Category getCategory() {
+        return category;
+    }
+
+    /**
+     * @param category the category to set
+     */
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 
 }
