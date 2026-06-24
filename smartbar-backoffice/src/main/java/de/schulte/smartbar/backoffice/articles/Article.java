@@ -1,9 +1,11 @@
 package de.schulte.smartbar.backoffice.articles;
 
 import java.math.BigDecimal;
+import java.util.List;
 
-import de.schulte.smartbar.backoffice.BaseEntity;
 import de.schulte.smartbar.backoffice.categories.Category;
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import io.quarkus.panache.common.Sort;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -18,90 +20,23 @@ import jakarta.validation.constraints.Positive;
 })
 @NamedQuery(name = "Article.byCategory", query = "FROM Article WHERE category = ?1 ORDER BY price DESC")
 @NamedQuery(name = "Article.nameContaining", query = "FROM Article WHERE name LIKE CONCAT('%', CONCAT(?1, '%'))")
-public class Article extends BaseEntity {
+public class Article extends PanacheEntity {
 
     @NotNull
-    private String name;
+    public String name;
     @NotNull
     @Positive
-    private BigDecimal price;
+    public BigDecimal price;
     @NotNull
-    private String description;
+    public String description;
     @NotNull
-    private String pictureBase64;
+    public String pictureBase64;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    private Category category;
+    public Category category;
 
-    /**
-     * @return the name
-     */
-    public String getName() {
-        return name;
+    public static List<Article> listByCategory(Category category) {
+        return list("category", Sort.by("price", Sort.Direction.Descending), category);
     }
-
-    /**
-     * @param name the name to set
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * @return the price
-     */
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    /**
-     * @param price the price to set
-     */
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    /**
-     * @return the description
-     */
-    public String getDescription() {
-        return description;
-    }
-
-    /**
-     * @param description the description to set
-     */
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    /**
-     * @return the pictureBase64
-     */
-    public String getPictureBase64() {
-        return pictureBase64;
-    }
-
-    /**
-     * @param pictureBase64 the pictureBase64 to set
-     */
-    public void setPictureBase64(String pictureBase64) {
-        this.pictureBase64 = pictureBase64;
-    }
-
-    /**
-     * @return the category
-     */
-    public Category getCategory() {
-        return category;
-    }
-
-    /**
-     * @param category the category to set
-     */
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
 }

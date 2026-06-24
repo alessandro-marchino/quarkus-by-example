@@ -1,67 +1,7 @@
 package de.schulte.smartbar.backoffice.categories;
 
-import java.net.URI;
-import java.util.List;
-import java.util.Optional;
+import io.quarkus.hibernate.orm.rest.data.panache.PanacheEntityResource;
 
-import de.schulte.smartbar.backoffice.api.CategoriesApi;
-import de.schulte.smartbar.backoffice.api.model.ApiCategory;
-import jakarta.inject.Inject;
-import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
-import jakarta.ws.rs.core.Response;
-
-@Transactional
-public class CategoriesResource implements CategoriesApi {
-    private final CategoryMapper mapper;
-
-    @Inject
-    public CategoriesResource(CategoryMapper mapper) {
-        this.mapper = mapper;
-    }
-
-    @Override
-    public Response categoriesCategoryIdDelete(Long categoryId) {
-        final Optional<Category> category = Category.findByIdOptional(categoryId);
-        if (category.isEmpty()) {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-        category.get().delete();
-        return Response.ok().build();
-    }
-
-    @Override
-    public Response categoriesCategoryIdGet(Long categoryId) {
-        final Optional<Category> category = Category.findByIdOptional(categoryId);
-        if (category.isEmpty()) {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-        return Response.ok(mapper.mapToApiCategory(category.get())).build();
-    }
-
-    @Override
-    public Response categoriesCategoryIdPut(Long categoryId, @Valid ApiCategory apiCategory) {
-        final Optional<Category> existingCategory = Category.findByIdOptional(categoryId);
-        if (existingCategory.isEmpty()) {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-        final Category category = existingCategory.get();
-        mapper.mapToCategory(apiCategory, category);
-        return Response.ok().build();
-    }
-
-    @Override
-    public Response categoriesGet() {
-        final List<Category> list = Category.listAll();
-        return Response.ok(list.stream().map(mapper::mapToApiCategory).toList()).build();
-    }
-
-    @Override
-    public Response categoriesPost(@Valid ApiCategory apiCategory) {
-        final Category category = new Category();
-        mapper.mapToCategory(apiCategory, category);
-        category.persist();
-        return Response.created(URI.create("/categories/" + category.id)).build();
-    }
-
+public interface CategoriesResource extends PanacheEntityResource<Category, Long> {
+    // Empty
 }
