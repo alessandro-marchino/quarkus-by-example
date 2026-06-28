@@ -4,8 +4,9 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import de.schulte.smartbar.backoffice.categories.Category;
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import io.quarkus.hibernate.reactive.panache.PanacheEntity;
 import io.quarkus.panache.common.Sort;
+import io.smallrye.mutiny.Uni;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -36,7 +37,7 @@ public class Article extends PanacheEntity {
     @JoinColumn(name = "category_id")
     public Category category;
 
-    public static List<Article> listByCategory(Category category) {
+    public static Uni<List<Article>> listByCategory(Category category) {
         return list("category", Sort.by("price", Sort.Direction.Descending), category);
     }
 }

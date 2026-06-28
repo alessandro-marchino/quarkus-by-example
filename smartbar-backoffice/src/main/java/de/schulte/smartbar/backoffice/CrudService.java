@@ -21,7 +21,6 @@ public abstract class CrudService<E extends BaseEntity> {
         return entity;
     }
     public E update(E entity) {
-        System.out.println(entity.getId());
         return entityManager.merge(entity);
     }
     public Optional<E> getById(Long id) {
