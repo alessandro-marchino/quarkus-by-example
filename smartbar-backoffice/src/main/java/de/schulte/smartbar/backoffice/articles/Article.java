@@ -18,7 +18,7 @@ import jakarta.validation.constraints.Positive;
 @jakarta.persistence.Table(name = "sbo_article", uniqueConstraints = {
     @UniqueConstraint(columnNames = { "name", "category_id" })
 })
-@NamedQuery(name = "Article.byCategory", query = "FROM Article WHERE category = ?1 ORDER BY price DESC")
+@NamedQuery(name = "Article.byCategory", query = "FROM Article WHERE category.id = :id ORDER BY price DESC")
 @NamedQuery(name = "Article.nameContaining", query = "FROM Article WHERE name LIKE CONCAT('%', CONCAT(?1, '%'))")
 public class Article extends PanacheEntity {
 

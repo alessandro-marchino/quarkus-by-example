@@ -18,12 +18,27 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "{{baseUrlBackoffice}}/articles",
+                  "raw": "{{baseUrlBackoffice}}/articles?namedQuery=Article.byCategory&id=1000&size=2",
                   "host": [
                     "{{baseUrlBackoffice}}"
                   ],
                   "path": [
                     "articles"
+                  ],
+                  "query": [
+                    {
+                      "key": "namedQuery",
+                      "value": "Article.byCategory"
+                    },
+                    {
+                      "key": "id",
+                      "value": "1000"
+                    },
+                    {
+                      "key": "size",
+                      "value": "2",
+                      "type": "text"
+                    }
                   ]
                 }
               },
@@ -78,7 +93,7 @@
                   "variable": [
                     {
                       "key": "id",
-                      "value": "51"
+                      "value": "1"
                     }
                   ]
                 }
@@ -117,7 +132,7 @@
                   "variable": [
                     {
                       "key": "id",
-                      "value": "51"
+                      "value": "1"
                     }
                   ]
                 }
@@ -141,7 +156,45 @@
                   "variable": [
                     {
                       "key": "id",
-                      "value": "51"
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "/category/:categoryId",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "x-category-id",
+                    "value": "1",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": \"Merlot\",\r\n    \"description\": \"A tasty red wine, try it!\",\r\n    \"price\": 5.20,\r\n    \"picture\": \"abcd\"\r\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrlBackoffice}}/articles/category/:categoryId",
+                  "host": [
+                    "{{baseUrlBackoffice}}"
+                  ],
+                  "path": [
+                    "articles",
+                    "category",
+                    ":categoryId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "categoryId",
+                      "value": "1001"
                     }
                   ]
                 }
@@ -306,7 +359,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\r\n    \"name\": \"costa-rica\",\r\n    \"seatCount\": 0,\r\n    \"active\": true\r\n}",
+                  "raw": "{\r\n    \"name\": \"madrid\",\r\n    \"seatCount\": 4,\r\n    \"active\": false\r\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -342,7 +395,7 @@
                   "variable": [
                     {
                       "key": "id",
-                      "value": "1"
+                      "value": "3000"
                     }
                   ]
                 }
@@ -399,7 +452,7 @@
                   "variable": [
                     {
                       "key": "id",
-                      "value": "2"
+                      "value": "1"
                     }
                   ]
                 }
