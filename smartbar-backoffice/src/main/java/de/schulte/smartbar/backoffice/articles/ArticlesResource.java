@@ -13,7 +13,7 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 
-@ResourceProperties(hal = true)
+@ResourceProperties(rolesAllowed = { "admin" })
 @NonBlocking
 public interface ArticlesResource extends PanacheEntityResource<Article, Long> {
 
