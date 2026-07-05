@@ -9,6 +9,10 @@ quarkus:
       strategy: drop-and-create
   http:
     auth:
-      basic: true
+      form:
+        enabled: true
+        login-page: loginSPA.html
+        error-page: ""
+        landing-page: ""
 
 smartbar.backoffice.foo: baz
