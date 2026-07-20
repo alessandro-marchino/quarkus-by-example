@@ -8,11 +8,11 @@ quarkus:
     schema-management:
       strategy: drop-and-create
   http:
-    auth:
-      form:
-        enabled: true
-        login-page: loginSPA.html
-        error-page: ""
-        landing-page: ""
+    ssl:
+      certificate:
+        key-store-file: smartbarbo.p12
+        trust-store-file: sbotrust.p12
+      client-auth: required
+    insecure-requests: redirect
 
 smartbar.backoffice.foo: baz
