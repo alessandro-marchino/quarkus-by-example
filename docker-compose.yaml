@@ -9,6 +9,31 @@ services:
       - '5432:5432'
     volumes:
       - postgresql_data:/var/lib/postgresql/18/docker
+  postgresql-keycloak:
+    image: postgres:18
+    environment:
+      POSTGRES_PASSWORD: kc
+      POSTGRES_USER: kc
+      POSTGRES_DB: kc
+    ports:
+      - '5433:5432'
+    volumes:
+      - postgresql-keycloak_data:/var/lib/postgresql/18/docker
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.7.0
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgresql-keycloak:5432/kc
+      KC_DB_USERNAME: kc
+      KC_DB_PASSWORD: kc
+    ports:
+      - '7070:8080'
+    depends_on:
+      - postgresql-keycloak
+    command: [ "start-dev" ]
 
 volumes:
   postgresql_data:
+  postgresql-keycloak_data:
