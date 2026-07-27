@@ -32,7 +32,9 @@ services:
       - '7070:8080'
     depends_on:
       - postgresql-keycloak
-    command: [ "start-dev" ]
+    volumes:
+      - ./docker/keycloak/realm:/opt/keycloak/data/import
+    command: [ "start-dev", "--import-realm" ]
 
 volumes:
   postgresql_data:

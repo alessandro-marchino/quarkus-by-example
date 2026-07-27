@@ -1,0 +1,67 @@
+{
+  "realm" : "sbo",
+  "users" : [ {
+    "id" : "87561930-729c-46d2-a058-0f42e1813e64",
+    "username" : "alice",
+    "firstName" : "Alice",
+    "lastName" : "Matthews",
+    "email" : "alice@alice.com",
+    "emailVerified" : true,
+    "enabled" : true,
+    "createdTimestamp" : 1785136910953,
+    "totp" : false,
+    "credentials" : [ {
+      "id" : "c0e0b0e4-2ebc-402b-b3bc-8d7ed741aafb",
+      "type" : "password",
+      "userLabel" : "My password",
+      "createdDate" : 1785136924886,
+      "secretData" : "{\"value\":\"LA2xE8xyseGOA6ouhAVQglxfPBmsOg90nnaw8XWARG8=\",\"salt\":\"85K/AbhOKgtYnqK2tBAweQ==\",\"additionalParameters\":{}}",
+      "credentialData" : "{\"hashIterations\":5,\"algorithm\":\"argon2\",\"additionalParameters\":{\"hashLength\":[\"32\"],\"memory\":[\"7168\"],\"type\":[\"id\"],\"version\":[\"1.3\"],\"parallelism\":[\"1\"]}}"
+    } ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "user", "default-roles-sbo" ],
+    "notBefore" : 0,
+    "groups" : [ ]
+  }, {
+    "id" : "f89785a0-b2e3-41b2-b9bb-32daa0843cbf",
+    "username" : "bob",
+    "firstName" : "Bob",
+    "lastName" : "Matthews",
+    "email" : "bob@bob.com",
+    "emailVerified" : true,
+    "enabled" : true,
+    "createdTimestamp" : 1785136882830,
+    "totp" : false,
+    "credentials" : [ {
+      "id" : "f3c21baf-9a08-43c3-83f9-ae0bbd1e6599",
+      "type" : "password",
+      "userLabel" : "My password",
+      "createdDate" : 1785136898019,
+      "secretData" : "{\"value\":\"V/Em+sRKXzeb5cgXhCP3nhn5H1UcgXaUdAAjOnzoRg8=\",\"salt\":\"MU6WCZGyLkS0eDnYKrhi+w==\",\"additionalParameters\":{}}",
+      "credentialData" : "{\"hashIterations\":5,\"algorithm\":\"argon2\",\"additionalParameters\":{\"hashLength\":[\"32\"],\"memory\":[\"7168\"],\"type\":[\"id\"],\"version\":[\"1.3\"],\"parallelism\":[\"1\"]}}"
+    } ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "default-roles-sbo", "admin" ],
+    "notBefore" : 0,
+    "groups" : [ ]
+  }, {
+    "id" : "7a6eb18e-3d54-4167-82de-8442c9cd139a",
+    "username" : "service-account-smartbar-backoffice",
+    "emailVerified" : false,
+    "enabled" : true,
+    "createdTimestamp" : 1785136831271,
+    "totp" : false,
+    "serviceAccountClientId" : "smartbar-backoffice",
+    "credentials" : [ ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "default-roles-sbo" ],
+    "clientRoles" : {
+      "smartbar-backoffice" : [ "uma_protection" ]
+    },
+    "notBefore" : 0,
+    "groups" : [ ]
+  } ]
+}
