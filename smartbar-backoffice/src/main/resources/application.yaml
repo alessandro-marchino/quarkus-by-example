@@ -7,5 +7,21 @@ quarkus:
   hibernate-orm:
     schema-management:
       strategy: drop-and-create
+  # http:
+  #   ssl:
+  #     certificate:
+  #       key-store-password: ""
+  #       trust-store-password: ""
+  #     client-auth: required
+  #   insecure-requests: redirect
+  oidc:
+    auth-server-url: http://localhost:7070/realms/sbo
+    client-id: smartbar-backoffice
+    client-secret: ""
+    application-type: hybrid
+    token-state-manager:
+      split-token: true
+    roles:
+      source: accesstoken
 
 smartbar.backoffice.foo: baz
