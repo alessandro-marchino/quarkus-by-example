@@ -1,8 +1,8 @@
 import './assets/main.css'
 
-import {createApp} from 'vue'
 import App from './App.vue'
-import KeycloackService from "@/KeycloackService.js";
+import KeycloackService from './KeycloackService'
+import { createApp } from 'vue'
 
 const keyclock = new KeycloackService()
 keyclock.authenticate(() => {

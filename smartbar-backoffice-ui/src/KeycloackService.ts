@@ -1,17 +1,17 @@
 import Keycloak from "keycloak-js";
 
 class KeycloackService {
+    keycloak: Keycloak;
 
     constructor() {
         this.keycloak = new Keycloak({
-            // url: 'http://smartbar-keycloak:8080',
             url: 'http://localhost:7070',
             realm: 'sbo',
             clientId: 'smartbar-backoffice'
         })
     }
 
-    async authenticate(callback){
+    async authenticate(callback: () => void) {
         try {
             console.log('Authenticating')
             const authenticated = await this.keycloak.init({
@@ -22,12 +22,10 @@ class KeycloackService {
             if(authenticated) {
                 callback()
             }
-
         } catch (error) {
             console.error('Failed to initialize adapter:', error);
         }
     }
-
 }
 
 export default KeycloackService
