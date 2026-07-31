@@ -28,6 +28,13 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>${quarkus.platform.group-id}</groupId>
+                <artifactId>quarkus-camel-bom</artifactId>
+                <version>${quarkus.platform.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -39,6 +46,30 @@
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-rest</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-smallrye-openapi</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-config-yaml</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-hibernate-validator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel.quarkus</groupId>
+            <artifactId>camel-quarkus-mapstruct</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-rest-jackson</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-rest-client-jackson</artifactId>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
@@ -97,6 +128,52 @@
                         <maven.home>${maven.home}</maven.home>
                     </systemPropertyVariables>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>7.2.0</version>
+                <executions>
+                    <execution>
+                        <id>Generate JAX-RS server-api-stubs</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                        <inputSpec>${project.basedir}/src/main/resources/META-INF/resources/openapi.yaml</inputSpec>
+                        <generatorName>jaxrs-spec</generatorName>
+                        <apiPackage>de.schulte.smartbar.orderclient.api</apiPackage>
+                        <modelPackage>de.schulte.smartbar.orderclient.api.model</modelPackage>
+                        <configOptions>
+                            <sourceFolder>src/main/java</sourceFolder>
+                            <useJakartaEe>true</useJakartaEe>
+                            <useSwaggerAnnotations>false</useSwaggerAnnotations>
+                            <interfaceOnly>true</interfaceOnly>
+                            <supportAsync>true</supportAsync>
+                            <returnResponse>true</returnResponse>
+                        </configOptions>
+                        </configuration>
+                    </execution>
+                    <!-- <execution>
+                        <id>Generate Backoffice API model</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                        <inputSpec>${project.basedir}/../smartbar-backoffice/src/main/resources/META-INF/resources/openapi.yaml</inputSpec>
+                        <generatorName>jaxrs-spec</generatorName>
+                        <apiPackage>de.schulte.smartbar.backoffice.api</apiPackage>
+                        <modelPackage>de.schulte.smartbar.backoffice.api.model</modelPackage>
+                        <generateApis>false</generateApis>
+                        <configOptions>
+                            <sourceFolder>src/main/java</sourceFolder>
+                            <useJakartaEe>true</useJakartaEe>
+                            <useSwaggerAnnotations>false</useSwaggerAnnotations>
+                            <interfaceOnly>true</interfaceOnly>
+                        </configOptions>
+                        </configuration>
+                    </execution> -->
+                </executions>
             </plugin>
         </plugins>
     </build>
