@@ -11,10 +11,10 @@ import jakarta.persistence.Table;
 @UserDefinition
 @Table(name = "sbo_user")
 public class User extends BaseEntity {
-    @Username
-    public String username;
-    @Password
-    public String password;
-    @Roles
-    public String roles;
+	@Username
+	public String username;
+	@Password
+	public String password;
+	@Roles
+	public String roles;
 }

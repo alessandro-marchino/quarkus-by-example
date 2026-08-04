@@ -10,34 +10,38 @@ import jakarta.transaction.Transactional;
 
 @Transactional
 public abstract class CrudService<E extends BaseEntity> {
-    private final EntityManager entityManager;
+	private final EntityManager entityManager;
 
-    protected CrudService(EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
+	protected CrudService(EntityManager entityManager) {
+		this.entityManager = entityManager;
+	}
 
-    public E persist(E entity) {
-        entityManager.persist(entity);
-        return entity;
-    }
-    public E update(E entity) {
-        return entityManager.merge(entity);
-    }
-    public Optional<E> getById(Long id) {
-        return Optional.ofNullable(entityManager.find(getEntityClass(), id));
-    }
-    public List<E> listAll() {
-        final CriteriaQuery<E> query = entityManager.getCriteriaBuilder().createQuery(getEntityClass());
-        final Root<E> root = query.from(getEntityClass());
-        query.select(root);
-        return entityManager.createQuery(query).getResultList();
-    }
-    public Optional<E> deleteById(Long id) {
-        final Optional<E> entity = getById(id);
-        entity.ifPresent(e -> entityManager.remove(e));
-        return entity;
-    }
+	public E persist(E entity) {
+		entityManager.persist(entity);
+		return entity;
+	}
 
-    protected abstract Class<E> getEntityClass();
+	public E update(E entity) {
+		return entityManager.merge(entity);
+	}
+
+	public Optional<E> getById(Long id) {
+		return Optional.ofNullable(entityManager.find(getEntityClass(), id));
+	}
+
+	public List<E> listAll() {
+		final CriteriaQuery<E> query = entityManager.getCriteriaBuilder().createQuery(getEntityClass());
+		final Root<E> root = query.from(getEntityClass());
+		query.select(root);
+		return entityManager.createQuery(query).getResultList();
+	}
+
+	public Optional<E> deleteById(Long id) {
+		final Optional<E> entity = getById(id);
+		entity.ifPresent(e -> entityManager.remove(e));
+		return entity;
+	}
+
+	protected abstract Class<E> getEntityClass();
 
 }

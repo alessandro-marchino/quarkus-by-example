@@ -4,9 +4,8 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import de.schulte.smartbar.backoffice.categories.Category;
-import io.quarkus.hibernate.reactive.panache.PanacheEntity;
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import io.quarkus.panache.common.Sort;
-import io.smallrye.mutiny.Uni;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -17,27 +16,27 @@ import jakarta.validation.constraints.Positive;
 
 @Entity
 @jakarta.persistence.Table(name = "sbo_article", uniqueConstraints = {
-    @UniqueConstraint(columnNames = { "name", "category_id" })
+	@UniqueConstraint(columnNames = { "name", "category_id" })
 })
 @NamedQuery(name = "Article.byCategory", query = "FROM Article WHERE category.id = :id ORDER BY price DESC")
 @NamedQuery(name = "Article.nameContaining", query = "FROM Article WHERE name LIKE CONCAT('%', CONCAT(?1, '%'))")
 public class Article extends PanacheEntity {
 
-    @NotNull
-    public String name;
-    @NotNull
-    @Positive
-    public BigDecimal price;
-    @NotNull
-    public String description;
-    @NotNull
-    public String pictureBase64;
+	@NotNull
+	public String name;
+	@NotNull
+	@Positive
+	public BigDecimal price;
+	@NotNull
+	public String description;
+	@NotNull
+	public String pictureBase64;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    public Category category;
+	@ManyToOne
+	@JoinColumn(name = "category_id")
+	public Category category;
 
-    public static Uni<List<Article>> listByCategory(Category category) {
-        return list("category", Sort.by("price", Sort.Direction.Descending), category);
-    }
+	public static List<Article> listByCategory(Category category) {
+		return list("category", Sort.by("price", Sort.Direction.Descending), category);
+	}
 }

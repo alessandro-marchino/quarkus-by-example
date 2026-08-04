@@ -11,11 +11,11 @@ import jakarta.ws.rs.core.SecurityContext;
 @Path("/user")
 public class UserResource {
 
-    @GET
-    @Path("/me")
-    public Response me(@Context SecurityContext securityContext) {
-        Principal principal = securityContext.getUserPrincipal();
-        String user = principal.getName();
-        return Response.ok(user).build();
-    }
+	@GET
+	@Path("/me")
+	public Response me(@Context SecurityContext securityContext) {
+		Principal principal = securityContext.getUserPrincipal();
+		String user = principal.getName();
+		return Response.ok(user).build();
+	}
 }
