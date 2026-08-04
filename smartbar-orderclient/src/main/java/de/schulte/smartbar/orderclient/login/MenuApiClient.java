@@ -1,6 +1,7 @@
 package de.schulte.smartbar.orderclient.login;
 
 import org.eclipse.microprofile.faulttolerance.Retry;
+import org.eclipse.microprofile.faulttolerance.Timeout;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 import de.schulte.smartbar.backoffice.api.model.ApiMenu;
@@ -13,6 +14,7 @@ import jakarta.ws.rs.Path;
 public interface MenuApiClient {
 
 	@GET
-	@Retry(delay = 2000)
+	@Retry(maxRetries = 10)
+	@Timeout(50)
 	Uni<ApiMenu> getMenu();
 }
