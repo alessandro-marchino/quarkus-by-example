@@ -3,6 +3,7 @@ package de.schulte.smartbar.orderclient.login;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 import de.schulte.smartbar.backoffice.api.model.ApiMenu;
+import io.smallrye.mutiny.Uni;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 
@@ -11,5 +12,5 @@ import jakarta.ws.rs.Path;
 public interface MenuApiClient {
 
 	@GET
-	ApiMenu getMenu();
+	Uni<ApiMenu> getMenu();
 }

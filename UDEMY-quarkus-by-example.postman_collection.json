@@ -462,6 +462,28 @@
           ]
         },
         {
+          "name": "/menu",
+          "item": [
+            {
+              "name": "/",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrlBackoffice}}/menu",
+                  "host": [
+                    "{{baseUrlBackoffice}}"
+                  ],
+                  "path": [
+                    "menu"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
           "name": "/user/me",
           "protocolProfileBehavior": {
             "disableBodyPruning": true,
@@ -486,6 +508,40 @@
             }
           },
           "response": []
+        }
+      ]
+    },
+    {
+      "name": "smartbar-orderclient",
+      "item": [
+        {
+          "name": "/logins",
+          "item": [
+            {
+              "name": "/{tableId}",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrlOrderclient}}/logins/:tableId",
+                  "host": [
+                    "{{baseUrlOrderclient}}"
+                  ],
+                  "path": [
+                    "logins",
+                    ":tableId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "tableId",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
         }
       ]
     }
@@ -517,6 +573,10 @@
   "variable": [
     {
       "key": "baseUrlBackoffice",
+      "value": ""
+    },
+    {
+      "key": "baseUrlOrderclient",
       "value": ""
     }
   ]

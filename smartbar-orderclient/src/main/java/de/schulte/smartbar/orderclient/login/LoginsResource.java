@@ -4,10 +4,11 @@ import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import de.schulte.smartbar.orderclient.api.LoginsApi;
 import de.schulte.smartbar.orderclient.api.model.LoginResponseBody;
-// import io.smallrye.common.annotation.NonBlocking;
+import io.smallrye.mutiny.Uni;
+import io.smallrye.common.annotation.NonBlocking;
 import jakarta.inject.Inject;
 
-// @NonBlocking
+@NonBlocking
 public class LoginsResource implements LoginsApi {
 
 	private final MenuApiClient menuApiClient;
@@ -20,7 +21,7 @@ public class LoginsResource implements LoginsApi {
 	}
 
 	@Override
-	public LoginResponseBody login(String tableId) {
-		return menuMapper.mapToLoginResponse(menuApiClient.getMenu());
+	public Uni<LoginResponseBody> login(String tableId) {
+		return menuApiClient.getMenu().map(menuMapper::mapToLoginResponse);
 	}
 }
