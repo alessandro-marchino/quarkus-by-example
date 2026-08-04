@@ -2,10 +2,10 @@ package de.schulte.smartbar.orderclient.login;
 
 import de.schulte.smartbar.orderclient.api.LoginsApi;
 import de.schulte.smartbar.orderclient.api.model.LoginResponseBody;
-import io.smallrye.common.annotation.NonBlocking;
+// import io.smallrye.common.annotation.NonBlocking;
 import jakarta.inject.Inject;
 
-@NonBlocking
+// @NonBlocking
 public class LoginsResource implements LoginsApi {
 
 	private final MenuApiClient menuApiClient;
