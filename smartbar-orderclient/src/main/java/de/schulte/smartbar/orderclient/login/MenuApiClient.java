@@ -1,7 +1,9 @@
 package de.schulte.smartbar.orderclient.login;
 
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
+import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
 import org.eclipse.microprofile.faulttolerance.Fallback;
 import org.eclipse.microprofile.faulttolerance.Retry;
 import org.eclipse.microprofile.faulttolerance.Timeout;
@@ -17,9 +19,10 @@ import jakarta.ws.rs.Path;
 public interface MenuApiClient {
 
 	@GET
-	@Retry(maxRetries = 10)
-	@Timeout(50)
+	@Retry
+	@Timeout(100)
 	@Fallback(fallbackMethod = "getFallbackMenu")
+	@CircuitBreaker(delay = 1, delayUnit = ChronoUnit.MINUTES)
 	Uni<ApiMenu> getMenu();
 
 	default Uni<ApiMenu> getFallbackMenu() {

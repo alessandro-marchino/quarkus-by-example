@@ -6,3 +6,7 @@ quarkus:
   rest-client:
     de.schulte.smartbar.orderclient.login.MenuApiClient:
       url: ""
+
+camel:
+  main:
+    jmxEnabled: false
