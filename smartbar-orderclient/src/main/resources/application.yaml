@@ -7,8 +7,5 @@ quarkus:
     de.schulte.smartbar.orderclient.login.MenuApiClient:
       url: ""
   cache:
-    redis:
-      expire-after-write: 60S
-      menu-cache:
-        key-type: java.lang.String
-        value-type: de.schulte.smartbar.orderclient.api.model.LoginResponseBody
+    caffeine:
+      expire-after-write: PT1M
