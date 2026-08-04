@@ -35,6 +35,10 @@ services:
     volumes:
       - ./docker/keycloak/realm:/opt/keycloak/data/import
     command: [ "start-dev", "--import-realm" ]
+  redis:
+    image: redis:8.10.0
+    ports:
+      - '6379:6379'
 
 volumes:
   postgresql_data:

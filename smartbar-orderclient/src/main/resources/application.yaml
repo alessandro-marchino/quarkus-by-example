@@ -9,3 +9,7 @@ quarkus:
   cache:
     caffeine:
       expire-after-write: PT1M
+  redis:
+    host: redis://localhost:6379/0
+    devservices:
+      enabled: false
