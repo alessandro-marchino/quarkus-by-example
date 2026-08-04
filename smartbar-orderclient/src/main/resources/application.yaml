@@ -3,7 +3,6 @@ quarkus:
     port: 8081
   management:
     port: 9001
-
-backoffice:
-  menuapi:
-    url: ""
+  rest-client:
+    de.schulte.smartbar.orderclient.login.MenuApiClient:
+      url: ""
