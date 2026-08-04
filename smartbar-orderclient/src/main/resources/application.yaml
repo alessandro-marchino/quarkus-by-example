@@ -6,7 +6,6 @@ quarkus:
   rest-client:
     de.schulte.smartbar.orderclient.login.MenuApiClient:
       url: ""
-
-camel:
-  main:
-    jmxEnabled: false
+  cache:
+    caffeine:
+      expire-after-write: PT2S
