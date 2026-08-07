@@ -10,6 +10,7 @@ import org.eclipse.microprofile.faulttolerance.Timeout;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 import de.schulte.smartbar.backoffice.api.model.ApiMenu;
+import io.quarkus.cache.CacheResult;
 import io.smallrye.mutiny.Uni;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -23,6 +24,7 @@ public interface MenuApiClient {
 	@Timeout(1000)
 	@Fallback(fallbackMethod = "getFallbackMenu")
 	@CircuitBreaker(delay = 1, delayUnit = ChronoUnit.MINUTES)
+	@CacheResult(cacheName = "menu-cache")
 	Uni<ApiMenu> getMenu();
 
 	default Uni<ApiMenu> getFallbackMenu() {

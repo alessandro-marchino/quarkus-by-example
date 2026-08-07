@@ -177,6 +177,7 @@
 							<supportAsync>true</supportAsync>
 							<useMutiny>true</useMutiny>
 							<openApiNullable>false</openApiNullable>
+							<returnResponse>true</returnResponse>
 						</configOptions>
 						</configuration>
 					</execution>
