@@ -10,7 +10,6 @@ quarkus:
     caffeine:
       expire-after-write: PT1M
   redis:
-    logins:
-      hosts: redis://localhost:6379/0
+    hosts: redis://localhost:6379/0
     devservices:
       enabled: false
