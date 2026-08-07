@@ -1,9 +1,10 @@
-package de.schulte.smartbar.orderclient.login;
+package de.schulte.smartbar.orderclient.login.redis;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+import de.schulte.smartbar.orderclient.login.LoginService;
 import io.quarkus.arc.lookup.LookupIfProperty;
 import io.quarkus.logging.Log;
 import io.smallrye.mutiny.Uni;

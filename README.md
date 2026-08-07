@@ -13,5 +13,6 @@ docker compose exec -it mongo bash
 mongosh -u root
 
 use logins
-db.createCollection('logins-timed', {'timeseries': {'timeField': 'expiresAt'}, expireAfterSeconds: 10})
+db.createCollection('logins-timed')
+db['logins-timed'].createIndex({ expiresAt: 1}, { expireAfterSeconds: 0 })
 ```
