@@ -5,16 +5,14 @@ import java.time.Instant;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 
 import io.quarkus.mongodb.panache.common.MongoEntity;
-import io.quarkus.mongodb.panache.reactive.ReactivePanacheMongoEntity;
-import io.smallrye.mutiny.Uni;
 
 @MongoEntity(database = "logins", collection = "logins-timed")
-public class Login extends ReactivePanacheMongoEntity {
+public class Login {
 
 	@BsonProperty("tableNumber")
-	public String tableId;
-	public String token;
-	public Instant expiresAt;
+	private String tableId;
+	private String token;
+	private Instant expiresAt;
 
 	public Login() {
 		// Empty constructor
@@ -26,7 +24,28 @@ public class Login extends ReactivePanacheMongoEntity {
 		this.expiresAt = expiresAt;
 	}
 
-	public static Uni<Login> findByTableId(String tableId) {
-		return find("tableNumber", tableId).firstResult();
+	public String getTableId() {
+		return tableId;
 	}
+
+	public void setTableId(String tableId) {
+		this.tableId = tableId;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+	public Instant getExpiresAt() {
+		return expiresAt;
+	}
+
+	public void setExpiresAt(Instant expiresAt) {
+		this.expiresAt = expiresAt;
+	}
+
 }

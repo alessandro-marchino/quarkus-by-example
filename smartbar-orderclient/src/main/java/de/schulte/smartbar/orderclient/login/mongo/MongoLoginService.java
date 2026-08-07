@@ -9,10 +9,18 @@ import io.quarkus.arc.lookup.LookupIfProperty;
 import io.quarkus.logging.Log;
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 @ApplicationScoped
 @LookupIfProperty(name = "smartbar.orderclient.login", stringValue = "mongo")
 public class MongoLoginService implements LoginService {
+
+	private final LoginRepository loginRepository;
+
+	@Inject
+	public MongoLoginService(LoginRepository loginRepository) {
+		this.loginRepository = loginRepository;
+	}
 
 	@Override
 	public Uni<String> createNewLogin(String tableId) {
@@ -20,13 +28,14 @@ public class MongoLoginService implements LoginService {
 		var token = UUID.randomUUID().toString();
 		var expiresAt = Instant.now().plusSeconds(20);
 		final var login = new Login(tableId, token, expiresAt);
-		return login.persist()
+		return loginRepository.persist(login)
 			.map(_ -> token);
 	}
 
 	@Override
 	public Uni<Boolean> hasLogin(String tableId) {
-		return Login.findByTableId(tableId).map(Objects::nonNull);
+		Log.info("Creating new Login via Redis");
+		return loginRepository.findByTableId(tableId).map(Objects::nonNull);
 	}
 
 }
