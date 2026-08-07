@@ -6,6 +6,7 @@ import de.schulte.smartbar.orderclient.api.LoginsApi;
 import de.schulte.smartbar.orderclient.api.model.LoginResponseBody;
 import io.smallrye.mutiny.Uni;
 import io.smallrye.common.annotation.NonBlocking;
+import jakarta.enterprise.inject.Instance;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
@@ -18,10 +19,10 @@ public class LoginsResource implements LoginsApi {
 	private final LoginService loginService;
 
 	@Inject
-	public LoginsResource(@RestClient MenuApiClient menuApiClient, MenuMapper menuMapper, LoginService loginService) {
+	public LoginsResource(@RestClient MenuApiClient menuApiClient, MenuMapper menuMapper, Instance<LoginService> serviceInstance) {
 		this.menuApiClient = menuApiClient;
 		this.menuMapper = menuMapper;
-		this.loginService = loginService;
+		this.loginService = serviceInstance.get();
 	}
 
 	@Override

@@ -15,3 +15,7 @@ quarkus:
       enabled: false
   mongodb:
     connection-string: mongodb://localhost:27017
+
+smartbar:
+  orderclient:
+    login: default
