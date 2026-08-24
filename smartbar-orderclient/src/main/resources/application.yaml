@@ -15,6 +15,15 @@ quarkus:
       enabled: false
   mongodb:
     connection-string: mongodb://localhost:27017
+  dynamodb:
+    endpoint-override: http://localhost:8000
+    aws:
+      region: eu-central-1
+      credentials:
+        type: static
+        static-provider:
+          access-key-id: test-key
+          secret-access-key: test-secret
 
 smartbar:
   orderclient:

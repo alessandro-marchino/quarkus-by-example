@@ -67,8 +67,15 @@ services:
     depends_on:
       mongo:
         condition: service_started
+  dynamodb:
+    image: amazon/dynamodb-local:3.3.1
+    ports:
+      - '8000:8000'
+    volumes:
+     - dynamodb_data:/home/dynamodblocal/data
 
 volumes:
   postgresql_data:
   postgresql-keycloak_data:
   mongo_data:
+  dynamodb_data:
