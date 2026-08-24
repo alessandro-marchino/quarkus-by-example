@@ -540,6 +540,92 @@
                 }
               },
               "response": []
+            },
+            {
+              "name": "/{tableId}",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrlOrderclient}}/logins/:tableId",
+                  "host": [
+                    "{{baseUrlOrderclient}}"
+                  ],
+                  "path": [
+                    "logins",
+                    ":tableId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "tableId",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "/orders",
+          "item": [
+            {
+              "name": "/{loginToken}",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrlOrderclient}}/orders/:loginToken",
+                  "host": [
+                    "{{baseUrlOrderclient}}"
+                  ],
+                  "path": [
+                    "orders",
+                    ":loginToken"
+                  ],
+                  "variable": [
+                    {
+                      "key": "loginToken",
+                      "value": ""
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "/{loginToken}",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"items\": [\r\n        {\r\n            \"articleId\": 1,\r\n            \"quantity\": 1,\r\n            \"price\": 10\r\n        },\r\n        {\r\n            \"articleId\": 2,\r\n            \"quantity\": 5,\r\n            \"price\": 20\r\n        }\r\n    ]\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrlOrderclient}}/orders/:loginToken",
+                  "host": [
+                    "{{baseUrlOrderclient}}"
+                  ],
+                  "path": [
+                    "orders",
+                    ":loginToken"
+                  ],
+                  "variable": [
+                    {
+                      "key": "loginToken",
+                      "value": "cad6f461-e478-4f45-8311-ec9864922c88"
+                    }
+                  ]
+                }
+              },
+              "response": []
             }
           ]
         }

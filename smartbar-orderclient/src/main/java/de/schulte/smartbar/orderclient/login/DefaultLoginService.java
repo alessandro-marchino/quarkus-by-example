@@ -1,5 +1,7 @@
 package de.schulte.smartbar.orderclient.login;
 
+import java.util.UUID;
+
 import io.quarkus.arc.lookup.LookupIfProperty;
 import io.quarkus.logging.Log;
 import io.smallrye.mutiny.Uni;
@@ -21,4 +23,9 @@ public class DefaultLoginService implements LoginService {
 		return Uni.createFrom().item(false);
 	}
 
+	@Override
+	public Uni<String> getTableIdByToken(String loginToken) {
+		Log.info("Get TableId via default method");
+		return Uni.createFrom().item(UUID.randomUUID().toString());
+	}
 }

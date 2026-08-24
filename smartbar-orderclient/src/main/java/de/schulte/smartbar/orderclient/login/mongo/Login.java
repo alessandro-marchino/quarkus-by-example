@@ -6,7 +6,7 @@ import org.bson.codecs.pojo.annotations.BsonProperty;
 
 import io.quarkus.mongodb.panache.common.MongoEntity;
 
-@MongoEntity(database = "logins", collection = "logins-timed")
+@MongoEntity(database = "smartbar-oc", collection = "logins-timed")
 public class Login {
 
 	@BsonProperty("tableNumber")

@@ -38,4 +38,12 @@ public class MongoLoginService implements LoginService {
 		return loginRepository.findByTableId(tableId).map(Objects::nonNull);
 	}
 
+	@Override
+	public Uni<String> getTableIdByToken(String loginToken) {
+		return loginRepository.findByLoginToken(loginToken).map(this::getTableIdIfValid);
+	}
+
+	private String getTableIdIfValid(Login login) {
+		return login != null && login.getExpiresAt().isAfter(Instant.now()) ? login.getTableId() : null;
+	}
 }

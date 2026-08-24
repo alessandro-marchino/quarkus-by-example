@@ -61,4 +61,8 @@ public class DynamoLoginService implements LoginService {
 			});
 	}
 
+	@Override
+	public Uni<String> getTableIdByToken(String loginToken) {
+		throw new UnsupportedOperationException("Unimplemented method 'getTableIdByToken'");
+	}
 }

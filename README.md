@@ -12,7 +12,8 @@ docker compose exec -it mongo bash
 # Inside the container
 mongosh -u root
 
-use logins
+use smartbar-oc
 db.createCollection('logins-timed')
 db['logins-timed'].createIndex({ expiresAt: 1}, { expireAfterSeconds: 0 })
+db.createCollection('orders')
 ```

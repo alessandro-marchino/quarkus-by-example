@@ -38,4 +38,8 @@ public class RedisLoginService implements LoginService {
 			.map(Objects::nonNull);
 	}
 
+	@Override
+	public Uni<String> getTableIdByToken(String loginToken) {
+		throw new UnsupportedOperationException("Unimplemented method 'getTableIdByToken'");
+	}
 }
