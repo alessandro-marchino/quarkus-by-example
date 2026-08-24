@@ -24,5 +24,8 @@ quarkus:
       split-tokens: true
     roles:
       source: accesstoken
+  kafka:
+    devservices:
+      enabled: false
 
 smartbar.backoffice.foo: baz
