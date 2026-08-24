@@ -22,8 +22,8 @@ quarkus:
       credentials:
         type: static
         static-provider:
-          access-key-id: test-key
-          secret-access-key: test-secret
+          access-key-id: test
+          secret-access-key: test
 
 smartbar:
   orderclient:
