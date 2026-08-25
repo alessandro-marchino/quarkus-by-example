@@ -12,4 +12,9 @@ public class UppercaseConsumer {
 	public void consume(String message) {
 		Log.infof("Message %s consumed in %s", message, getClass().getSimpleName());
 	}
+
+	@Incoming("uppercase-channel")
+	public void consume2(String message) {
+		Log.infof("2 - Message %s consumed in %s", message, getClass().getSimpleName());
+	}
 }

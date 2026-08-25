@@ -1,11 +1,11 @@
 package de.schulte.smartbar.backoffice.messaging;
 
 import org.eclipse.microprofile.reactive.messaging.Channel;
-import org.eclipse.microprofile.reactive.messaging.Emitter;
 
 import io.smallrye.common.annotation.NonBlocking;
 import io.smallrye.mutiny.Uni;
 import io.smallrye.reactive.messaging.MutinyEmitter;
+import io.smallrye.reactive.messaging.annotations.Broadcast;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
@@ -16,7 +16,7 @@ public class MessagingResource {
 
 	private final MutinyEmitter<String> emitter;
 
-	public MessagingResource(@Channel("my-channel") MutinyEmitter<String> emitter) {
+	public MessagingResource(@Channel("my-channel") @Broadcast MutinyEmitter<String> emitter) {
 		this.emitter = emitter;
 	}
 
