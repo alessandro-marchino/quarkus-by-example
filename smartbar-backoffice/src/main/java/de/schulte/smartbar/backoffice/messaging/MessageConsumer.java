@@ -1,9 +1,11 @@
 package de.schulte.smartbar.backoffice.messaging;
 
 import org.eclipse.microprofile.reactive.messaging.Incoming;
+import org.eclipse.microprofile.reactive.messaging.Message;
 import org.eclipse.microprofile.reactive.messaging.Outgoing;
 
 import io.quarkus.logging.Log;
+import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
@@ -11,15 +13,13 @@ public class MessageConsumer {
 
 	@Incoming("my-channel")
 	@Outgoing("uppercase-channel")
-	public String consume(String message) {
-		Log.infof("Message %s consumed in %s", message, getClass().getSimpleName());
-		return message.toUpperCase();
+	public Uni<String> consume(final Message<String> message) {
+		final var payload = message.getPayload();
+		final var currentMillis = message.getMetadata(Long.class);
+		Log.infof("Message %s consumed in %s", payload, getClass().getSimpleName());
+		currentMillis.ifPresent(millis -> Log.infof("Metadata: millis %d", millis));
+		return Uni.createFrom().completionStage(message.ack())
+			.map(_ -> payload.toUpperCase());
 	}
 
-	@Incoming("my-channel")
-	@Outgoing("uppercase-channel")
-	public String consume2(String message) {
-		Log.infof("2 - Message %s consumed in %s", message, getClass().getSimpleName());
-		return message.toUpperCase();
-	}
 }
