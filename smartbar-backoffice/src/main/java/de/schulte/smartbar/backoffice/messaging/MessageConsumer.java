@@ -13,13 +13,12 @@ public class MessageConsumer {
 
 	@Incoming("my-channel")
 	@Outgoing("uppercase-channel")
-	public Uni<String> consume(final Message<String> message) {
+	public Uni<Message<String>> consume(final Message<String> message) {
 		final var payload = message.getPayload();
 		final var currentMillis = message.getMetadata(Long.class);
 		Log.infof("Message %s consumed in %s", payload, getClass().getSimpleName());
 		currentMillis.ifPresent(millis -> Log.infof("Metadata: millis %d", millis));
-		return Uni.createFrom().completionStage(message.ack())
-			.map(_ -> payload.toUpperCase());
+		return Uni.createFrom().item(Message.of(payload.toUpperCase(), () -> message.nack(new RuntimeException("Something went wrong"))));
 	}
 
 }

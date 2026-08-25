@@ -10,6 +10,8 @@ import io.smallrye.reactive.messaging.MutinyEmitter;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
 
 @Path("/message")
 @NonBlocking
@@ -23,8 +25,10 @@ public class MessagingResource {
 
 	@POST
 	@Consumes("text/plain")
-	public Uni<String> postMessage(final String text) {
+	public Uni<Response> postMessage(final String text) {
 		final var message = Message.of(text, Metadata.of(System.currentTimeMillis()));
-		return this.emitter.sendMessage(message).map(_ -> "Message sent");
+		return this.emitter.sendMessage(message).map(_ -> Response.ok("Message sent").build())
+			.onFailure()
+				.recoverWithItem(Response.status(Status.INTERNAL_SERVER_ERROR).build());
 	}
 }
