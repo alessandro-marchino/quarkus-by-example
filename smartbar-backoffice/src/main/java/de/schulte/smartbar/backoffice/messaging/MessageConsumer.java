@@ -18,7 +18,7 @@ public class MessageConsumer {
 		final var currentMillis = message.getMetadata(Long.class);
 		Log.infof("Message %s consumed in %s", payload, getClass().getSimpleName());
 		currentMillis.ifPresent(millis -> Log.infof("Metadata: millis %d", millis));
-		return Uni.createFrom().item(Message.of(payload.toUpperCase(), () -> message.nack(new RuntimeException("Something went wrong"))));
+		return Uni.createFrom().item(Message.of(payload.toUpperCase(), () -> message.ack()));
 	}
 
 }
