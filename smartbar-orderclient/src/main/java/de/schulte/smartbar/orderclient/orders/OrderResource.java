@@ -1,10 +1,13 @@
 package de.schulte.smartbar.orderclient.orders;
 
+import org.eclipse.microprofile.reactive.messaging.Channel;
+
 import de.schulte.smartbar.orderclient.api.OrdersApi;
 import de.schulte.smartbar.orderclient.api.model.PlaceOrderRequest;
 import de.schulte.smartbar.orderclient.login.LoginService;
 import io.smallrye.common.annotation.NonBlocking;
 import io.smallrye.mutiny.Uni;
+import io.smallrye.reactive.messaging.MutinyEmitter;
 import jakarta.enterprise.inject.Instance;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
@@ -14,10 +17,12 @@ import jakarta.ws.rs.core.Response.Status;
 @NonBlocking
 public class OrderResource implements OrdersApi {
 	private final LoginService loginService;
+	private final MutinyEmitter<Order> emitter;
 
 	@Inject
-	public OrderResource(Instance<LoginService> loginServiceInstance) {
+	public OrderResource(Instance<LoginService> loginServiceInstance, @Channel("order-placed-events") MutinyEmitter<Order> orderPlacedEventsEmitter) {
 		this.loginService = loginServiceInstance.get();
+		this.emitter = orderPlacedEventsEmitter;
 	}
 
 	@Override
@@ -50,7 +55,13 @@ public class OrderResource implements OrdersApi {
 			.map(item -> new OrderPosition(item.getArticleId(), item.getQuantity(), item.getPrice()))
 			.toList();
 		order.tableId = tableId;
-		return order.persist().map(_ -> Response.ok().build());
+		return order.<Order>persist()
+			.flatMap(this::sendOrderPlacedEvent)
+			.map(_ -> Response.ok().build());
+	}
+
+	private Uni<Void> sendOrderPlacedEvent(Order order) {
+		return this.emitter.send(order);
 	}
 
 	private Uni<Response> notAllowed() {

@@ -57,7 +57,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\r\n    \"name\": \"Merlot\",\r\n    \"description\": \"A tasty red wine, try it!\",\r\n    \"price\": 5.20,\r\n    \"picture\": \"abcd\"\r\n}",
+                  "raw": "{\r\n    \"name\": \"Merlot\",\r\n    \"description\": \"A tasty red wine, try it!\",\r\n    \"price\": 5.20,\r\n    \"pictureBase64\": \"abcd\"\r\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -635,7 +635,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\r\n    \"items\": [\r\n        {\r\n            \"articleId\": 1,\r\n            \"quantity\": 1,\r\n            \"price\": 10\r\n        },\r\n        {\r\n            \"articleId\": 2,\r\n            \"quantity\": 5,\r\n            \"price\": 20\r\n        }\r\n    ]\r\n}",
+                  "raw": "{\r\n    \"items\": [\r\n        {\r\n            \"articleId\": 1,\r\n            \"quantity\": 1,\r\n            \"price\": 10\r\n        }\r\n    ]\r\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -654,7 +654,7 @@
                   "variable": [
                     {
                       "key": "loginToken",
-                      "value": "cad6f461-e478-4f45-8311-ec9864922c88"
+                      "value": "409d77ad-c352-472e-b6a2-4200578723df"
                     }
                   ]
                 }

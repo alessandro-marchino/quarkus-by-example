@@ -27,19 +27,32 @@ quarkus:
   kafka:
     devservices:
       enabled: false
-    bootstrap:
-      servers: localhost:9092
   rabbitmq:
     devservices:
       enabled: false
+  # mp:
   messaging:
     outgoing:
       menu-update-events:
-        connector: smallrye-rabbitmq
-        default-routing-key: menuupdates
-        exchange:
-          type: direct
-          name: smartbar
+        connector: smallrye-kafka
+        topic: menu-update-events
+        value:
+          serialized: io.quarkus.kafka.client.serialization.ObjectMapperSerializer
+    incoming:
+      order-placed-events:
+        connector: smallrye-kafka
+        topic: order-placed-events
+        group:
+          id: backoffice-article-updater
+      turnover-db-channel:
+        connector: smallrye-kafka
+        topic: order-placed-events
+        group:
+          id: backoffice-turnover-updater
+
+kafka:
+  bootstrap:
+    servers: localhost:9092
 
 rabbitmq-host: localhost
 rabbitmq-port: 5672
