@@ -24,6 +24,19 @@ quarkus:
         static-provider:
           access-key-id: test
           secret-access-key: test
+  kafka:
+    devservices:
+      enabled: false
+    bootstrap:
+      servers: localhost:9092
+  mp:
+    messaging:
+      incoming:
+        menu-update-events:
+          connector: smallrye-kafka
+          topic: menu-update-events
+          value:
+            serializer: io.quarkus.kafka.client.serialization.ObjectMapperSerializer
 
 smartbar:
   orderclient:

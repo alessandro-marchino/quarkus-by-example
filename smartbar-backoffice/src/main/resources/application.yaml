@@ -27,5 +27,15 @@ quarkus:
   kafka:
     devservices:
       enabled: false
+    bootstrap:
+      servers: localhost:9092
+  mp:
+    messaging:
+      outgoing:
+        menu-update-events:
+          connector: smallrye-kafka
+          topic: menu-update-events
+          value:
+            serializer: io.quarkus.kafka.client.serialization.ObjectMapperSerializer
 
 smartbar.backoffice.foo: baz

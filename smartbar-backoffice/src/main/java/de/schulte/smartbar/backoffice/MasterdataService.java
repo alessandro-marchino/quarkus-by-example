@@ -18,7 +18,7 @@ public class MasterdataService {
 	private final MutinyEmitter<EntityChangedEvent> emitter;
 
 	@Inject
-	public MasterdataService(@Channel("masterdata-changed-channel") MutinyEmitter<EntityChangedEvent> emitter) {
+	public MasterdataService(@Channel("menu-update-events") MutinyEmitter<EntityChangedEvent> emitter) {
 		this.emitter = emitter;
 	}
 
