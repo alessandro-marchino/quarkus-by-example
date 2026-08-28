@@ -1,13 +1,15 @@
 package de.schulte.smartbar.backoffice;
 
-import org.apache.kafka.common.header.internals.RecordHeaders;
+import java.util.Map;
+
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Message;
 import org.eclipse.microprofile.reactive.messaging.Metadata;
 
 import io.quarkus.arc.Unremovable;
+import io.quarkus.logging.Log;
 import io.smallrye.reactive.messaging.MutinyEmitter;
-import io.smallrye.reactive.messaging.kafka.api.OutgoingKafkaRecordMetadata;
+import io.smallrye.reactive.messaging.rabbitmq.OutgoingRabbitMQMetadata;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
@@ -23,11 +25,11 @@ public class MasterdataService {
 	}
 
 	public void fireEventChangedEvent(final BaseEntity entity) {
+		Log.infof("Firing event for %s", entity.getClass());
 		final var event = new EntityChangedEvent(entity.getId(), entity.getClass().getSimpleName());
-		final var kafkaMetaData = OutgoingKafkaRecordMetadata.builder()
-			.withHeaders(new RecordHeaders().add("my-header", "my-value".getBytes()))
-			.withKey(entity.getClass().getSimpleName())
+		final var metadata = OutgoingRabbitMQMetadata.builder()
+			.withHeaders(Map.of("my-header", "my-value".getBytes()))
 			.build();
-		this.emitter.sendMessageAndAwait(Message.of(event, Metadata.of(kafkaMetaData)));
+		this.emitter.sendMessageAndAwait(Message.of(event, Metadata.of(metadata)));
 	}
 }

@@ -1,8 +1,12 @@
 package de.schulte.smartbar.backoffice;
 
+import jakarta.enterprise.inject.spi.CDI;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.PostPersist;
+import jakarta.persistence.PostRemove;
+import jakarta.persistence.PostUpdate;
 import jakarta.persistence.SequenceGenerator;
 
 @MappedSuperclass
@@ -27,4 +31,11 @@ public class BaseEntity {
 		this.id = id;
 	}
 
+	@SuppressWarnings("null")
+	@PostPersist
+	@PostUpdate
+	@PostRemove
+	public void fireChangedEvent() {
+		CDI.current().select(MasterdataService.class).get().fireEventChangedEvent(this);
+	}
 }

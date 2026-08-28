@@ -29,14 +29,21 @@ quarkus:
       enabled: false
     bootstrap:
       servers: localhost:9092
-  mp:
-    messaging:
-      incoming:
-        menu-update-events:
-          connector: smallrye-kafka
-          topic: menu-update-events
-          value:
-            serializer: io.quarkus.kafka.client.serialization.ObjectMapperSerializer
+  rabbitmq:
+    devservices:
+      enabled: false
+  messaging:
+    incoming:
+      menu-update-events:
+        connector: smallrye-rabbitmq
+        default-routing-key: menuupdates
+        queue:
+          name: menuupdates
+
+rabbitmq-host: localhost
+rabbitmq-port: 5672
+rabbitmq-username: ""
+rabbitmq-password: ""
 
 smartbar:
   orderclient:

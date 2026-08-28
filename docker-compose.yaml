@@ -91,7 +91,14 @@ services:
       - kafka
     environment:
       DYNAMIC_CONFIG_ENABLED: 'true'
-
+  rabbitmq:
+    image: rabbitmq:management-alpine
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    environment:
+      RABBITMQ_DEFAULT_USER: smartbar
+      RABBITMQ_DEFAULT_PASS: smartbar
 
 volumes:
   postgresql_data:
